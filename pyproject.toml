@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cw4-2"
+version = "0.1.0"
+description = ""
+authors = ["MishaRocks <tehobox@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "cw4_2"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
