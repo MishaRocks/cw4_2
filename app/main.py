@@ -1,7 +1,10 @@
-from src.api import HeadHunterAPI
+from src.api import HeadHunterAPI, SuperJobAPI
 
 
 if __name__ == '__main__':
+
     hh = HeadHunterAPI()
-    print(hh.host_to_api())
+    sj = SuperJobAPI()
+    print(sj.save_json())
+
 
