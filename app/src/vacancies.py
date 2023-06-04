@@ -1,17 +1,18 @@
-from api import HeadHunterAPI, SuperJobAPI
-
 
 class Vacancies:
 
-    def __init__(self, id, title, payment, date, description, candidat, URL):
-        self.id = id
+    def __init__(self, vid: int, title: str, payment: int, date, description: str, candidate: str, url):
+        self.vid = vid
         self.title = title
         self.payment = payment
         self.date = date
         self.description = description
-        self.candidat = candidat
-        self.URL = URL
+        self.candidate = candidate
+        self.url = url
 
+    def __repr__(self):
+        return f'self.title'
 
-
-
+    def __gt__(self, other):
+        if isinstance(self, other):
+            return self.payment > other.payment

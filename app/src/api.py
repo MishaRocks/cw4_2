@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 import requests
-import json
 
 
 class API(ABC):
@@ -10,7 +9,7 @@ class API(ABC):
         ...
 
     @abstractmethod
-    def save_json(self):
+    def list_for_json(self):
         ...
 
 
@@ -33,10 +32,10 @@ class HeadHunterAPI(API):
         data = req.json()
         return data
 
-    def dict_for_json(self):
+    def list_for_json(self) -> list:
         """
-        Формируем словать с выбранными полями
-        :return:
+        Формируем список с выбранными полями
+        :return: Список
         """
 
         hh_to_json = []
@@ -45,16 +44,15 @@ class HeadHunterAPI(API):
             hh_dict = {
                 'id': v['id'],
                 'title': v["name"],
-                'payment': v["salary"],
+                'payment': v["salary"]["from"] if v["salary"] else None,
                 'date': v["published_at"],
                 'description': v["snippet"]["responsibility"],
-                'candidat': v["snippet"]["requirement"],
-                'URL': v["alternate_url"]
+                'candidate': v["snippet"]["requirement"],
+                'url': v["alternate_url"]
             }
             hh_to_json.append(hh_dict)
 
-        with open(self._data, 'w', encoding='utf8') as file:
-            json.dump(hh_to_json, file, ensure_ascii=False, indent=4)
+        return hh_to_json
 
 
 class SuperJobAPI(API):
@@ -64,6 +62,10 @@ class SuperJobAPI(API):
     _data = 'data/sj.json'
 
     def host_to_api(self) -> dict:
+        """
+        Отправляем запрос к Апи HeadHunter
+        :return: ответ от сервера
+        """
         params = {
             'keyword': 'Аналитик данных',
             'payment_from': 0,
@@ -77,7 +79,11 @@ class SuperJobAPI(API):
         data = req.json()
         return data
 
-    def save_json(self):
+    def list_for_json(self) -> list:
+        """
+            Формируем список с выбранными полями
+            :return: Список
+        """
 
         sj_to_json = []
 
@@ -88,10 +94,9 @@ class SuperJobAPI(API):
                 'payment': v["payment_from"],
                 'date': v["date_published"],
                 'description': v["work"],
-                'candidat': v["candidat"],
-                'URL': v["link"]
+                'candidate': v["candidat"],
+                'url': v["link"]
             }
             sj_to_json.append(sj_dict)
 
-        with open(self._data, 'w', encoding='utf8') as file:
-            json.dump(sj_to_json, file, ensure_ascii=False, indent=4)
+        return sj_to_json

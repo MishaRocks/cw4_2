@@ -1,10 +1,13 @@
 from src.api import HeadHunterAPI, SuperJobAPI
+from src.jsonsaver import JSONSaver
 
+hh = HeadHunterAPI()
+sj = SuperJobAPI()
+js = JSONSaver()
 
 if __name__ == '__main__':
 
-    hh = HeadHunterAPI()
-    sj = SuperJobAPI()
-    print(sj.save_json())
+    joblist = ['superjob', 'headhunter']
+    print(js.form_json(joblist))
 
 
