@@ -5,42 +5,29 @@ import requests
 class API(ABC):
 
     @abstractmethod
-    def host_to_api(self):
-        ...
-
-    @abstractmethod
-    def list_for_json(self):
+    def host_to_api(self, top_n, keyword):
         ...
 
 
 class HeadHunterAPI(API):
 
-    _data = 'data/hh.json'
-
-    def host_to_api(self) -> dict:
+    def host_to_api(self, top_n: int = 10, keyword=None) -> list:
         """
         Отправляем запрос к Апи HeadHunter
         :return: ответ от сервера
         """
         params = {
-            'text': 'NAME:стажер',  # Текст фильтра.
+            'text': f'NAME:{keyword}',  # Текст фильтра.
             'area': 1,  # Поиск ощуществляется по вакансиям города Москва(1)
             'page': 0,  # Индекс страницы поиска на HH
-            'per_page': 100  # Кол-во вакансий на 1 странице
+            'per_page': int(top_n)  # Кол-во вакансий на 1 странице
         }
         req = requests.get('https://api.hh.ru/vacancies', params)  # Посылаем запрос к API
         data = req.json()
-        return data
-
-    def list_for_json(self) -> list:
-        """
-        Формируем список с выбранными полями
-        :return: Список
-        """
 
         hh_to_json = []
 
-        for v in self.host_to_api()["items"]:
+        for v in data["items"]:
             hh_dict = {
                 'id': v['id'],
                 'title': v["name"],
@@ -59,17 +46,16 @@ class SuperJobAPI(API):
 
     _id = 2511
     _secret_key = 'v3.r.12992770.9da9256ef42ebec4990e486239bd9681525bbdf4.8bf82f42278c10eee6820196cc20289b607cc2a2'
-    _data = 'data/sj.json'
 
-    def host_to_api(self) -> dict:
+    def host_to_api(self, top_n: int = 10, keyword=None) -> list:
         """
         Отправляем запрос к Апи HeadHunter
         :return: ответ от сервера
         """
         params = {
-            'keyword': 'Аналитик данных',
+            'keyword': keyword,
             'payment_from': 0,
-            'count': 100,
+            'count': int(top_n),
             'page': 0
         }
 
@@ -77,17 +63,10 @@ class SuperJobAPI(API):
                            headers={"X-Api-App-Id": self._secret_key},
                            params=params)
         data = req.json()
-        return data
-
-    def list_for_json(self) -> list:
-        """
-            Формируем список с выбранными полями
-            :return: Список
-        """
 
         sj_to_json = []
 
-        for v in self.host_to_api()["objects"]:
+        for v in data["objects"]:
             sj_dict = {
                 'id': v['id'],
                 'title': v["profession"],
