@@ -1,7 +1,5 @@
 import json
 
-from app.src.api import HeadHunterAPI, SuperJobAPI
-
 
 class JSONSaver:
 
@@ -32,5 +30,3 @@ class JSONSaver:
                     return v
                 else:
                     raise FileNotFoundError('Вакансия не найдена')
-
-

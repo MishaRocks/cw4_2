@@ -10,8 +10,14 @@ class Vacancies:
         self.candidate = candidate
         self.url = url
 
-    def __repr__(self):
-        return f'self.title'
+    def __str__(self):
+        return f'{self.vid}\n'\
+               f'{self.title}\n'\
+               f'{self.payment}\n'\
+               f'{self.description}\n'\
+               f'{self.candidate}\n'\
+               f'{self.url}\n' \
+               f''f'------------------\n'
 
     def __gt__(self, other):
         if isinstance(self, other):

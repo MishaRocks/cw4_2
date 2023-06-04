@@ -11,7 +11,7 @@ class API(ABC):
 
 class HeadHunterAPI(API):
 
-    def host_to_api(self, top_n: int = 10, keyword=None) -> list:
+    def host_to_api(self, top_n, keyword=None) -> list:
         """
         Отправляем запрос к Апи HeadHunter
         :return: ответ от сервера
@@ -47,7 +47,7 @@ class SuperJobAPI(API):
     _id = 2511
     _secret_key = 'v3.r.12992770.9da9256ef42ebec4990e486239bd9681525bbdf4.8bf82f42278c10eee6820196cc20289b607cc2a2'
 
-    def host_to_api(self, top_n: int = 10, keyword=None) -> list:
+    def host_to_api(self, top_n, keyword=None) -> list:
         """
         Отправляем запрос к Апи HeadHunter
         :return: ответ от сервера
