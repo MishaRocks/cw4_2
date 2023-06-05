@@ -29,7 +29,7 @@ class HeadHunterAPI(API):
 
         for v in data["items"]:
             hh_dict = {
-                'id': v['id'],
+                'id': int(v['id']),
                 'title': v["name"],
                 'payment': v["salary"]["from"] if v["salary"] else None,
                 'date': v["published_at"],
@@ -68,7 +68,7 @@ class SuperJobAPI(API):
 
         for v in data["objects"]:
             sj_dict = {
-                'id': v['id'],
+                'id': int(v['id']),
                 'title': v["profession"],
                 'payment': v["payment_from"],
                 'date': v["date_published"],

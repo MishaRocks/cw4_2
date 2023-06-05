@@ -21,5 +21,18 @@ def user_interface():
         print(v)
 
 
+def get_one_vacancy():
+    vid_show = int(input("Введите ID вакансии, чтобы показать её отдельно:\n"))
+    print(js.get_vacancy(vid_show))
+
+
+def del_vacancy():
+    vid_del = int(input("Введите ID вакансии,чтобы удалить её из списка:\n"))
+    js.delete_vacancy(vid_del)
+    print("Вакансия удалена")
+
+
 if __name__ == '__main__':
     user_interface()
+    get_one_vacancy()
+    del_vacancy()
